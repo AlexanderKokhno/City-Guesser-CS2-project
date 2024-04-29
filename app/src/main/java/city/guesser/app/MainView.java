@@ -15,7 +15,12 @@ public class MainView {
 
   public String main() {
 
-    return GeoCityFetcher.fetchCitiesAPI();
+    String getResults = GeoCityFetcher.fetchCitiesAPI();
+    System.out.println(getResults);
+    Double ZeroCoordinates[] = GeoCityParser.parseGeoCityGetRequest(getResults);
+    return LatLongFetcher.fetchCitiesAPI(ZeroCoordinates[0], ZeroCoordinates[1]);
+
+    /// this is just proof of concept we could use the longitude & latitude tool
 
   }
 }
