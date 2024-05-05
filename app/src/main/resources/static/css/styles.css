@@ -1,0 +1,21 @@
+h4 {
+  color: red;
+}
+
+.city_info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#city_name,
+#city_country,
+#city_region,
+#city_regionID,
+#city_map {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  padding-left: 15px;
+  padding-right: auto;
+}/*# sourceMappingURL=styles.css.map */
