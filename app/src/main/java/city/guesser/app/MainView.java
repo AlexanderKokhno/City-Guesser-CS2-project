@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import com.vaadin.flow.component.html.H1;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /// this is the controller, for the routes
 
@@ -53,6 +55,17 @@ public class MainView {
     Double Long = (Double) ObjLong;
     return LatLongFetcher.fetchCitiesAPI(lat, Long);
 
+  }
+
+  @GetMapping("/test") // WE CAN SEND STUFF BACK TO BACKEND USING THIS BY PASSING THE VARIABLE THROUGH
+                       // URL
+
+  // EXAMPLE: http://localhost:8080/test?testVAR=testingIfThisWorks
+  public String testingRequester(@RequestParam("testVAR") String testVAR, Model model) {
+
+    model.addAttribute("testVAR", testVAR);
+
+    return "tester.html";
   }
 
   // @RequestMapping(value = "/index")
