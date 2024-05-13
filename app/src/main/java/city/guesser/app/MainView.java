@@ -11,7 +11,17 @@ import org.springframework.ui.Model;
 
 import com.vaadin.flow.component.html.H1;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /// this is the controller, for the routes
 
@@ -28,25 +38,29 @@ public class MainView {
   @RequestMapping(value = "/main")
   public String index(Model model) {
     System.out.println(getResults);
-    Object ObjName = QCityInfo[2];
-    String cityName = (String) ObjName;
-    Object ObjCountry = QCityInfo[3];
-    String cityCountry = (String) ObjCountry;
-    Object ObjRegion = QCityInfo[4];
-    String cityRegion = (String) ObjRegion;
-    Object ObjRegionId = QCityInfo[5];
-    String cityRegionId = (String) ObjRegionId;
-
-    model.addAttribute("name", cityName);
-    model.addAttribute("country", cityCountry);
-    model.addAttribute("region", cityRegion);
-    model.addAttribute("regionID", cityRegionId);
+    DispInfoMain DIM = new DispInfoMain();
+    String[] cityInfoArrayS = DIM.dispInfoMain(QCityInfo);
+    model.addAttribute("name", cityInfoArrayS[0]);
+    model.addAttribute("country", cityInfoArrayS[1]);
+    model.addAttribute("region", cityInfoArrayS[2]);
+    model.addAttribute("regionID", cityInfoArrayS[3]);
 
     return "index";
 
   }
 
   @RequestMapping("/map") // looks for this url and responds to it
+  @ResponseBody
+  public String map() {
+    Object ObjLat = QCityInfo[0];
+    Double lat = (Double) ObjLat; // brute forced, double check data type beforehand, use instanceof if not sure
+    Object ObjLong = QCityInfo[1];
+    Double Long = (Double) ObjLong;
+    return LatLongFetcher.fetchCitiesAPI(lat, Long);
+
+  }
+
+  @RequestMapping("/submission") // looks for this url and responds to it
   @ResponseBody
   public String main() {
     Object ObjLat = QCityInfo[0];
@@ -77,4 +91,18 @@ public class MainView {
   // return "index";
 
   // }
+
+  @RequestMapping(value = "/test2")
+  public String tester2() {
+
+    return "tester2";
+
+  }
+
+  @RequestMapping(value = "/test3")
+  public String tester3(@ModelAttribute Tester_3 tester_3) {
+    System.out.println(tester_3.toString());
+    return "tester2";
+  }
+
 }
