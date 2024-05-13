@@ -8,6 +8,8 @@ h4 {
   width: 100%;
 }
 
+#city_lat,
+#city_long,
 #city_name,
 #city_country,
 #city_region,
@@ -19,4 +21,8 @@ h4 {
   padding-left: 15px;
   padding-right: auto;
 
+}
+
+.hide-this {
+  display: block;
 }

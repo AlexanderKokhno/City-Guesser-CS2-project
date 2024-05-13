@@ -6,10 +6,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 import java.net.http.HttpRequest;
 
+// https://rapidapi.com/wirefreethought/api/geodb-cities
+
 public class GeoCityFetcher {
-  public static String fetchCitiesAPI() {
+  public static String fetchCitiesAPI(int a) {
+    String url = "https://wft-geo-db.p.rapidapi.com/v1/geo/cities";
+    int offset = a;
+    int limit = 2;
+    String limitParem = "?limit=" + limit;
+    String offSetParem = "&offset=" + offset;
+    String sortParem = "&sort=population";
     HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create("https://wft-geo-db.p.rapidapi.com/v1/geo/adminDivisions"))
+
+        .uri(URI.create(url + limitParem + offSetParem + sortParem))
         .header("X-RapidAPI-Key", "9bd545da8emsh14144bd6cc0419dp1c49e7jsn84fef7b662fe")
         .header("X-RapidAPI-Host", "wft-geo-db.p.rapidapi.com")
         .method("GET", HttpRequest.BodyPublishers.noBody())

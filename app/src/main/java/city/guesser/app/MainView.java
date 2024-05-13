@@ -29,47 +29,44 @@ import javax.servlet.http.HttpServletResponse;
 // @RestController
 @Controller
 public class MainView {
-
-  String getResults = GeoCityFetcher.fetchCitiesAPI();
-
-  Object QCityInfo[] = GeoCityParser.parseGeoCityGetRequest(getResults); // go check the relevant file to refrence data
-                                                                         // types
+  public int randomInt() {
+    int min = 0;
+    int max = 99999;
+    int range = max - min + 1;
+    return (int) (Math.random() * range) + min;
+  }
 
   @RequestMapping(value = "/main")
   public String index(Model model) {
+
+    String getResults = GeoCityFetcher.fetchCitiesAPI(randomInt());
+
+    String QCityInfo[] = GeoCityParser.parseGeoCityGetRequest(getResults); // go check the relevant file to refrence
+                                                                           // data
+                                                                           // types
     System.out.println(getResults);
-    DispInfoMain DIM = new DispInfoMain();
-    String[] cityInfoArrayS = DIM.dispInfoMain(QCityInfo);
-    model.addAttribute("name", cityInfoArrayS[0]);
-    model.addAttribute("country", cityInfoArrayS[1]);
-    model.addAttribute("region", cityInfoArrayS[2]);
-    model.addAttribute("regionID", cityInfoArrayS[3]);
+
+    String map_url = LatLongFetcher.fetchCitiesAPI(QCityInfo[0], QCityInfo[1]);
+
+    model.addAttribute("lat", QCityInfo[0]);
+    model.addAttribute("long", QCityInfo[1]);
+    model.addAttribute("name", QCityInfo[2]);
+    model.addAttribute("country", QCityInfo[3]);
+    model.addAttribute("region", QCityInfo[4]);
+    model.addAttribute("regionID", QCityInfo[5]);
+    model.addAttribute("map_url", map_url)
 
     return "index";
 
   }
 
-  @RequestMapping("/map") // looks for this url and responds to it
-  @ResponseBody
-  public String map() {
-    Object ObjLat = QCityInfo[0];
-    Double lat = (Double) ObjLat; // brute forced, double check data type beforehand, use instanceof if not sure
-    Object ObjLong = QCityInfo[1];
-    Double Long = (Double) ObjLong;
-    return LatLongFetcher.fetchCitiesAPI(lat, Long);
+  // @RequestMapping("/map") // looks for this url and responds to it
+  // @ResponseBody
+  // public String map() {
 
-  }
+  // return LatLongFetcher.fetchCitiesAPI(lat, Long);
 
-  @RequestMapping("/submission") // looks for this url and responds to it
-  @ResponseBody
-  public String main() {
-    Object ObjLat = QCityInfo[0];
-    Double lat = (Double) ObjLat; // brute forced, double check data type beforehand, use instanceof if not sure
-    Object ObjLong = QCityInfo[1];
-    Double Long = (Double) ObjLong;
-    return LatLongFetcher.fetchCitiesAPI(lat, Long);
-
-  }
+  // }
 
   @GetMapping("/test") // WE CAN SEND STUFF BACK TO BACKEND USING THIS BY PASSING THE VARIABLE THROUGH
                        // URL

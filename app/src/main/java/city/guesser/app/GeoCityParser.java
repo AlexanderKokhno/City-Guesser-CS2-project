@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class GeoCityParser {
 
-  public static Object[] parseGeoCityGetRequest(String jsonResponse) {
+  public static String[] parseGeoCityGetRequest(String jsonResponse) {
     JSONObject jsonObject = new JSONObject(jsonResponse);
     JSONArray results = jsonObject.getJSONArray("data");
     JSONObject firstResult = results.getJSONObject(0);
@@ -25,7 +25,10 @@ public class GeoCityParser {
     cityInfo[4] = region;
     cityInfo[5] = regionCode;
 
-    return cityInfo;
+    DispInfoMain DIM = new DispInfoMain();
+    String[] CI = DIM.dispInfoMain(cityInfo);
+
+    return CI;
 
   }
 

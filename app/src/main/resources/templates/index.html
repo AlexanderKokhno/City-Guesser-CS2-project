@@ -12,7 +12,14 @@
 <body>
   <h4>Can you guess the city?</h4>
   <div class="city_info">
-
+    <div id="city_lat">
+      <p>City lat: </p>
+      <p th:text="${lat}">ERROR</p>
+    </div>
+    <div id="city_long">
+      <p>City long: </p>
+      <p th:text="${long}">ERROR</p>
+    </div>
     <div id="city_name">
       <p>City name: </p>
       <p th:text="${name}">ERROR</p>
@@ -30,10 +37,24 @@
       <p th:text="${regionID}">ERROR</p>
     </div>
     <div id="city_map">
-      <a href="http://localhost:8080/map">View on Map</a>
+      <a href=${map_url}>View on Map</a>
     </div>
 
-    <button type="button">Click Me!</button>
+    <div>
+      <form name="selectCity" method="post" action="/main">
+
+        <label for="gender">Select City Name</label> <br />
+        <select name="gender">
+          <option value=""></option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+
 
   </div>
 

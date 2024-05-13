@@ -8,6 +8,8 @@ h4 {
   width: 100%;
 }
 
+#city_lat,
+#city_long,
 #city_name,
 #city_country,
 #city_region,
@@ -18,4 +20,14 @@ h4 {
   width: 80%;
   padding-left: 15px;
   padding-right: auto;
-}/*# sourceMappingURL=styles.css.map */
+}
+
+.hide-this {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  padding-left: 15px;
+  padding-right: auto;
+}
+
+/*# sourceMappingURL=styles.css.map */
