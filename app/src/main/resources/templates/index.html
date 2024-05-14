@@ -11,19 +11,12 @@
 
 <body>
   <h4>Can you guess the city?</h4>
+  <div>
+    <p>Player Score:</p>
+    <p th:text="${player_score}">ERROR</p>
+  </div>
   <div class="city_info">
-    <div id="city_lat">
-      <p>City lat: </p>
-      <p th:text="${lat}">ERROR</p>
-    </div>
-    <div id="city_long">
-      <p>City long: </p>
-      <p th:text="${long}">ERROR</p>
-    </div>
-    <div id="city_name">
-      <p>City name: </p>
-      <p th:text="${name}">ERROR</p>
-    </div>
+
     <div id="city_country">
       <p>Country of Origin: </p>
       <p th:text="${country}">ERROR</p>
@@ -41,13 +34,15 @@
     </div>
 
     <div>
-      <form name="selectCity" method="post" action="/main">
+      <form name="selectCity" method="post" action="main">
 
-        <label for="gender">Select City Name</label> <br />
-        <select name="gender">
-          <option value=""></option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+        <label for="guessName">Guess City Name</label> <br />
+        <select name="guessName">
+          <option th:value="${name1}" th:text="${name1}">ERROR</option>
+          <option th:value="${name2}" th:text="${name2}">ERROR</option>
+          <option th:value="${name3}" th:text="${name3}">ERROR</option>
+          <option th:value="${name4}" th:text="${name4}">ERROR</option>
+          <option th:value="${name5}" th:text="${name5}">ERROR</option>
         </select>
 
         <button type="submit">Submit</button>

@@ -25,36 +25,88 @@ import javax.servlet.http.HttpServletResponse;
 
 /// this is the controller, for the routes
 
+/////////// THIS IS NOT THE MAIN, GO TO AppApplication.java
+
 // @Route("")
 // @RestController
 @Controller
 public class MainView {
   public int randomInt() {
     int min = 0;
-    int max = 99999;
+    int max = 499994;
     int range = max - min + 1;
     return (int) (Math.random() * range) + min;
   }
 
+  public int playerScore = 0;
+
+  public void setPlayerScore(int value) {
+    this.playerScore = value;
+  }
+
+  public int getPlayerScore() {
+    return playerScore;
+  }
+
+  public String correctAns;
+
+  public void setCorrectAns(String value) {
+    this.correctAns = value;
+  }
+
+  public String getCorrectAns() {
+    return correctAns;
+  }
+
+  public Boolean checkAns(String a) {
+
+    System.out.println("--------------------------------");
+    System.out.println(getCorrectAns());
+    if (a.equals(getCorrectAns())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @RequestMapping(value = "/main")
-  public String index(Model model) {
+  public String index(@ModelAttribute GuessedRandomName guessedRandomName, Model model) {
+
+    System.out.println(getCorrectAns());
+    int playerScore = getPlayerScore();
+    System.out.println("Testing" + guessedRandomName.toString());
+    Boolean isCorrect = (checkAns(guessedRandomName.toString()));
+    System.out.println(isCorrect);
+    if (isCorrect == true) {
+      setPlayerScore(playerScore + 1);
+    } else {
+      setPlayerScore(0);
+    }
+
+    System.out.println(getCorrectAns());
 
     String getResults = GeoCityFetcher.fetchCitiesAPI(randomInt());
 
-    String QCityInfo[] = GeoCityParser.parseGeoCityGetRequest(getResults); // go check the relevant file to refrence
-                                                                           // data
-                                                                           // types
+    String[] QCityInfo = GeoCityParser.parseGeoCityGetRequest(getResults);
+    DispInfoMain disp = new DispInfoMain();
+    setCorrectAns(QCityInfo[2]);
+    System.out.println(getCorrectAns());
+    String[] randomCityNames = disp.randomNames(QCityInfo);
     System.out.println(getResults);
-
+    System.out.println(getCorrectAns());
     String map_url = "/map?lat=" + QCityInfo[0] + "&long=" + QCityInfo[1];
 
-    model.addAttribute("lat", QCityInfo[0]);
-    model.addAttribute("long", QCityInfo[1]);
-    model.addAttribute("name", QCityInfo[2]);
     model.addAttribute("country", QCityInfo[3]);
     model.addAttribute("region", QCityInfo[4]);
     model.addAttribute("regionID", QCityInfo[5]);
+
+    model.addAttribute("name1", randomCityNames[0]);
+    model.addAttribute("name2", randomCityNames[1]);
+    model.addAttribute("name3", randomCityNames[2]);
+    model.addAttribute("name4", randomCityNames[3]);
+    model.addAttribute("name5", randomCityNames[4]);
     model.addAttribute("map_url", map_url);
+    model.addAttribute("player_score", playerScore);
 
     System.out.println("--------------------------------");
     System.out.println(map_url);
@@ -69,40 +121,6 @@ public class MainView {
 
     return LatLongFetcher.fetchCitiesAPI(latitude, longitude);
 
-  }
-
-  @GetMapping("/test") // WE CAN SEND STUFF BACK TO BACKEND USING THIS BY PASSING THE VARIABLE THROUGH
-                       // URL
-
-  // EXAMPLE: http://localhost:8080/test?testVAR=testingIfThisWorks
-  public String testingRequester(@RequestParam("testVAR") String testVAR, Model model) {
-
-    model.addAttribute("testVAR", testVAR);
-
-    return "tester.html";
-  }
-
-  // @RequestMapping(value = "/index")
-  // public String index(Model model) {
-  // String test = "Do you see this? If yes, thats good";
-  // int test2 = 1;
-  // model.addAttribute("message", test);
-  // model.addAttribute("testNum", test2);
-  // return "index";
-
-  // }
-
-  @RequestMapping(value = "/test2")
-  public String tester2() {
-
-    return "tester2";
-
-  }
-
-  @RequestMapping(value = "/test3")
-  public String tester3(@ModelAttribute Tester_3 tester_3) {
-    System.out.println(tester_3.toString());
-    return "tester2";
   }
 
 }

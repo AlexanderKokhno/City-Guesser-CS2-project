@@ -7,6 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 //////////// ROUTES IN MAINVIEW
 
+///////////////////// THIS IS THE MAIN
+
 ///// GO TO http://localhost:8080/main
 
 @SpringBootApplication
@@ -15,7 +17,9 @@ import org.springframework.context.annotation.ComponentScan;
 public class AppApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(AppApplication.class, args);
+
 	}
 
 }

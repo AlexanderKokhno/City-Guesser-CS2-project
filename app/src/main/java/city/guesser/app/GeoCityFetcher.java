@@ -12,7 +12,7 @@ public class GeoCityFetcher {
   public static String fetchCitiesAPI(int a) {
     String url = "https://wft-geo-db.p.rapidapi.com/v1/geo/cities";
     int offset = a;
-    int limit = 2;
+    int limit = 5;
     String limitParem = "?limit=" + limit;
     String offSetParem = "&offset=" + offset;
     String sortParem = "&sort=population";
