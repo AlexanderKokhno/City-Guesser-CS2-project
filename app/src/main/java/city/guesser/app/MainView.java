@@ -46,7 +46,7 @@ public class MainView {
                                                                            // types
     System.out.println(getResults);
 
-    String map_url = LatLongFetcher.fetchCitiesAPI(QCityInfo[0], QCityInfo[1]);
+    String map_url = "/map?lat=" + QCityInfo[0] + "&long=" + QCityInfo[1];
 
     model.addAttribute("lat", QCityInfo[0]);
     model.addAttribute("long", QCityInfo[1]);
@@ -54,19 +54,22 @@ public class MainView {
     model.addAttribute("country", QCityInfo[3]);
     model.addAttribute("region", QCityInfo[4]);
     model.addAttribute("regionID", QCityInfo[5]);
-    model.addAttribute("map_url", map_url)
+    model.addAttribute("map_url", map_url);
+
+    System.out.println("--------------------------------");
+    System.out.println(map_url);
 
     return "index";
 
   }
 
-  // @RequestMapping("/map") // looks for this url and responds to it
-  // @ResponseBody
-  // public String map() {
+  @RequestMapping("/map") // looks for this url and responds to it
+  @ResponseBody
+  public String map(@RequestParam(value = "lat") String latitude, @RequestParam(value = "long") String longitude) {
 
-  // return LatLongFetcher.fetchCitiesAPI(lat, Long);
+    return LatLongFetcher.fetchCitiesAPI(latitude, longitude);
 
-  // }
+  }
 
   @GetMapping("/test") // WE CAN SEND STUFF BACK TO BACKEND USING THIS BY PASSING THE VARIABLE THROUGH
                        // URL
